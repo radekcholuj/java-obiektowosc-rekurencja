@@ -36,9 +36,9 @@ public class PersonsTree {
         root = new Person("Marek", "Janowczyk", MarekJanowczykPersons);
     }
 
-        public void displayAllPersonsFromRoot() {
-            displayAllPersons(root);
-        }
+    public void displayAllPersonsFromRoot() {
+        displayAllPersons(root);
+    }
 
 
     private void displayAllPersons(Person person) {
@@ -52,23 +52,44 @@ public class PersonsTree {
             System.out.println(persons[i].getSurname());
         }
     }
-        public boolean exists(String name) {
-            return exists(root, name);
+
+    public boolean exists(String name, String surname) {
+        if (root.getName().equals(name) && root.getSurname().equals(surname)){
+            return true;
         }
 
-        private boolean exists(Person person, String name) {
-            Person[] persons = person.getPersons();
-            for(int i = 0; persons != null && i < persons.length; i++) {
-                if(persons[i].getName().equals(name)){
-                    return true;
-                }
-            }
+        return exists(root, name, surname);
+    }
 
-            boolean exists = false;
-            for(int i = 0; persons != null && i < persons.length; i++) {
-                exists |= exists(persons[i], name);
+    private boolean exists(Person person, String name) {
+        Person[] persons = person.getPersons();
+        for (int i = 0; persons != null && i < persons.length; i++) {
+            if (persons[i].getName().equals(name)) {
+                return true;
             }
-            return exists;
+        }
+
+
+        boolean exists = false;
+        for (int i = 0; persons != null && i < persons.length; i++) {
+            exists |= exists(persons[i], name);
+        }
+        return exists;
+    }
+    private boolean exists(Person person, String name, String surname) {
+        Person[] persons = person.getPersons();
+        for (int i = 0; persons != null && i < persons.length; i++) {
+            if (persons[i].getName().equals(name) && persons[i].getSurname().equals(surname)) {
+                return true;
+            }
+        }
+
+
+        boolean exists = false;
+        for (int i = 0; persons != null && i < persons.length; i++) {
+            exists |= exists(persons[i], name, surname);
+        }
+        return exists;
     }
 }
 
